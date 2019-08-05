@@ -8,6 +8,12 @@
   pointer-events: none;
 }
 
+.App-logo-working {
+  animation: App-logo-working-spin infinite 2s ease-in-out alternate;
+  height: 40vmin;
+  pointer-events: none;
+}
+
 .App-header {
   background-color: #282c34;
   min-height: 100vh;
@@ -23,11 +29,24 @@
   color: #61dafb;
 }
 
+.work {
+  font-size: 2rem;
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
   }
   to {
     transform: rotate(360deg);
+  }
+}
+
+@keyframes App-logo-working-spin {
+  from {
+    transform: rotate(0deg) scale(0.5);
+  }
+  to {
+    transform: rotate(360deg) scale(1.5);
   }
 }
