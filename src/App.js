@@ -1,40 +1,44 @@
-import React, {Component} from 'react';
-import logo from './logo.svg';
+import React, { Component } from 'react';
 import './App.css';
 
-import Quote from "./Quote";
-import Lamp from "./Lamp";
+import Quote from "./component/Quote";
+import GenerateQuote from "./component/GenerateQuote";
 
 class App extends Component {
   constructor() {
     super();
-    this.state = {
-      working: true
+    const baseQuote = {
+      quote:
+        "Facts are meaningless. You could use facts to prove anything that's even remotely true.",
+      character: "Homer Simpson",
+      image:
+        "https://cdn.glitch.com/3c3ffadc-3406-4440-bb95-d40ec8fcde72%2FHomerSimpson.png?1497567511939"
     };
-    this.handleClick = this.handleClick.bind(this);
+
+    this.state = {
+      simpsonQuote: baseQuote
+    };
+
+    this.getQuote = this.getQuote.bind(this);
   }
 
-  handleClick() {
-    this.setState(prevState => {
-      return { working: !prevState.working };
-    });
+  getQuote() {
+    fetch("https://thesimpsonsquoteapi.glitch.me/quotes")
+      .then(response => response.json())
+      .then(data => this.setState({
+        simpsonQuote: data[0],
+      }));
   }
 
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className={ this.state.working ? "App-logo-working" : "App-logo" } alt="logo" />
-          <h1 className="App-title">Simpsons Quotes</h1>
-        </header>
-        <button className="work" onClick={this.handleClick}>{ this.state.working ? "Homer need a break" : "Homer must work" }</button>
-        <Lamp on />
-        <Lamp />
-        <Quote />
+        <Quote {...this.state.simpsonQuote} />
+        <GenerateQuote selectQuote={this.getQuote} />
       </div>
     );
   }
-  
+
 }
 
 export default App;
